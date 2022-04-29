@@ -1,7 +1,4 @@
-// 整个包的入口
-// 统一导出
-// 导出颜色选择器组件
-import JSONSchemaEditor from './button'
+import JSONSchemaEditor from './JSONSchemaEditor'
 // import './fonts/iconfont.css'
 
 const components = [
