@@ -11,17 +11,28 @@
             @click="hidden = !hidden" />
           <span v-else style="width: 32px; display: inline-block"></span>
           <!-- 字段名称 -->
-          <a-input :disabled="disabled || root" :value="pickKey" class="ant-col-name-input" @blur="onInputName" />
+          <a-input
+            :disabled="disabled || root || (pickValue.disabled && pickValue.disabled.indexOf('key') !== -1)"
+            :value="pickKey"
+            class="ant-col-name-input"
+            @blur="onInputName" />
         </div>
         <!-- start 勾选框 -->
         <!-- 根结点全选  非根节点 勾选是否必填-->
         <a-tooltip v-if="root">
           <span slot="title" v-text="local['checked_all']">全选</span>
-          <a-checkbox :disabled="!isObject && !isArray" class="ant-col-name-required" @change="onRootCheck" />
+          <a-checkbox
+            :disabled="(!isObject && !isArray) || (pickValue.disabled && pickValue.disabled.indexOf('required') !== -1)"
+            class="ant-col-name-required"
+            @change="onRootCheck" />
         </a-tooltip>
         <a-tooltip v-else>
           <span slot="title" v-text="local['required']">是否必填</span>
-          <a-checkbox :disabled="isItem" :checked="checked" class="ant-col-name-required" @change="onCheck" />
+          <a-checkbox
+            :disabled="isItem || (pickValue.disabled && pickValue.disabled.indexOf('required') !== -1)"
+            :checked="checked"
+            class="ant-col-name-required"
+            @change="onCheck" />
         </a-tooltip>
         <!-- end 勾选框 -->
         <!-- 根结点全选  非根节点 勾选是否必填-->
@@ -30,7 +41,7 @@
         <!-- start 类型 -->
         <a-select
           v-model="pickValue.type"
-          :disabled="disabledType"
+          :disabled="disabledType || (pickValue.disabled && pickValue.disabled.indexOf('type') !== -1)"
           class="ant-col-type"
           @change="onChangeType"
           :getPopupContainer="
@@ -50,7 +61,11 @@
       </a-col> -->
       <!--  start描述 -->
       <a-col>
-        <a-input v-model="pickValue.description" class="ant-col-title" :placeholder="local['description']" />
+        <a-input
+          v-model="pickValue.description"
+          :disabled="pickValue.disabled && pickValue.disabled.indexOf('description') !== -1"
+          class="ant-col-title"
+          :placeholder="local['description']" />
       </a-col>
       <!--  end描述 -->
 
@@ -273,7 +288,7 @@ export default {
     custom: {
       //enable custom properties
       type: Boolean,
-      default: false,
+      default: true,
     },
     lang: {
       // i18n language
@@ -283,9 +298,11 @@ export default {
   },
   computed: {
     pickValue() {
+      console.log('value=======', Object.values(this.value)[0])
       return Object.values(this.value)[0]
     },
     pickKey() {
+      console.log('key======', Object.keys(this.value))
       return Object.keys(this.value)[0]
     },
     isObject() {
