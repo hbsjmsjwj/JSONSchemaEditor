@@ -10,8 +10,11 @@
             style="color: rgba(0, 0, 0, 0.65)"
             @click="hidden = !hidden" />
           <span v-else style="width: 32px; display: inline-block"></span>
+          <!-- 字段名称 -->
           <a-input :disabled="disabled || root" :value="pickKey" class="ant-col-name-input" @blur="onInputName" />
         </div>
+        <!-- start 勾选框 -->
+        <!-- 根结点全选  非根节点 勾选是否必填-->
         <a-tooltip v-if="root">
           <span slot="title" v-text="local['checked_all']">全选</span>
           <a-checkbox :disabled="!isObject && !isArray" class="ant-col-name-required" @change="onRootCheck" />
@@ -20,8 +23,11 @@
           <span slot="title" v-text="local['required']">是否必填</span>
           <a-checkbox :disabled="isItem" :checked="checked" class="ant-col-name-required" @change="onCheck" />
         </a-tooltip>
+        <!-- end 勾选框 -->
+        <!-- 根结点全选  非根节点 勾选是否必填-->
       </a-col>
       <a-col :span="4">
+        <!-- start 类型 -->
         <a-select
           v-model="pickValue.type"
           :disabled="disabledType"
@@ -36,10 +42,18 @@
             {{ t }}
           </a-select-option>
         </a-select>
+        <!-- end 类型 -->
       </a-col>
-      <a-col>
+      <!-- 标题 -->
+      <!-- <a-col>
         <a-input v-model="pickValue.title" class="ant-col-title" :placeholder="local['title']" />
+      </a-col> -->
+      <!--  start描述 -->
+      <a-col>
+        <a-input v-model="pickValue.description" class="ant-col-title" :placeholder="local['description']" />
       </a-col>
+      <!--  end描述 -->
+
       <a-col :span="6" class="ant-col-setting">
         <a-tooltip>
           <span slot="title" v-text="local['adv_setting']">高级设置</span>
