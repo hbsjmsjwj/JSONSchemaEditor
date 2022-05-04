@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <div class="title">
-      <a href="https://github.com/zyqwst/json-schema-editor-vue" target="_blank">json-schema-editor-vue</a> Preview
     </div>
     <div class="desc">
       <div>
