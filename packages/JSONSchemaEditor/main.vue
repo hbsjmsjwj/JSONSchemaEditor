@@ -12,7 +12,7 @@
           <span v-else style="width: 32px; display: inline-block"></span>
           <!-- 字段名称 -->
           <a-input
-            :disabled="disabled || root || (pickValue.disabled && pickValue.disabled.indexOf('key') !== -1)"
+            :disabled="disabled || root || (pickValue.__disabled && pickValue.__disabled.indexOf('key') !== -1)"
             :value="pickKey"
             class="ant-col-name-input"
             @blur="onInputName" />
@@ -22,14 +22,14 @@
         <a-tooltip v-if="root">
           <span slot="title" v-text="local['checked_all']">全选</span>
           <a-checkbox
-            :disabled="(!isObject && !isArray) || (pickValue.disabled && pickValue.disabled.indexOf('required') !== -1)"
+            :disabled="(!isObject && !isArray) || (pickValue.__disabled && pickValue.__disabled.indexOf('required') !== -1)"
             class="ant-col-name-required"
             @change="onRootCheck" />
         </a-tooltip>
         <a-tooltip v-else>
           <span slot="title" v-text="local['required']">是否必填</span>
           <a-checkbox
-            :disabled="isItem || (pickValue.disabled && pickValue.disabled.indexOf('required') !== -1)"
+            :disabled="isItem || (pickValue.__disabled && pickValue.__disabled.indexOf('required') !== -1)"
             :checked="checked"
             class="ant-col-name-required"
             @change="onCheck" />
@@ -41,7 +41,7 @@
         <!-- start 类型 -->
         <a-select
           v-model="pickValue.type"
-          :disabled="disabledType || (pickValue.disabled && pickValue.disabled.indexOf('type') !== -1)"
+          :disabled="disabledType || (pickValue.__disabled && pickValue.__disabled.indexOf('type') !== -1)"
           class="ant-col-type"
           @change="onChangeType"
           :getPopupContainer="
@@ -63,7 +63,7 @@
       <a-col>
         <a-input
           v-model="pickValue.description"
-          :disabled="pickValue.disabled && pickValue.disabled.indexOf('description') !== -1"
+          :disabled="pickValue.__disabled && pickValue.__disabled.indexOf('description') !== -1"
           class="ant-col-title"
           :placeholder="local['description']" />
       </a-col>
@@ -76,11 +76,11 @@
         </a-tooltip>
         <a-tooltip v-if="isObject">
           <span slot="title" v-text="local['add_child_node']">添加子节点</span>
-          <a-button :disabled="pickValue.disabled&&pickValue.disabled.indexOf('addChild') !== -1" type="link" icon="plus" class="plus-icon" @click="addChild" />
+          <a-button :disabled="pickValue.__disabled&&pickValue.__disabled.indexOf('addChild') !== -1" type="link" icon="plus" class="plus-icon" @click="addChild" />
         </a-tooltip>
         <a-tooltip v-if="!root && !isItem">
           <span slot="title" v-text="local['remove_node']">删除节点</span>
-          <a-button type="link" class="close-icon ant-btn-icon-only" @click="removeNode" :disabled="pickValue.disabled&&pickValue.disabled.indexOf('removeNode') !== -1" >
+          <a-button type="link" class="close-icon ant-btn-icon-only" @click="removeNode" :disabled="pickValue.__disabled&&pickValue.__disabled.indexOf('removeNode') !== -1" >
             <i aria-label="icon: plus" class="anticon anticon-plus">
               <svg
                 viewBox="64 64 896 896"

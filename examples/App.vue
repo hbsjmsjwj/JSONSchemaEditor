@@ -43,14 +43,14 @@ export default {
         root: {
           type: 'object',
           title: '条件',
-          disabled: ['description'],
+          __disabled: ['description'],
           properties: {
             name: {
               type: 'string',
               title: '名称',
               maxLength: 10,
               minLength: 2,
-              disabled: ['key', 'required', 'type', 'description', 'addChild', 'removeNode'],
+              __disabled: ['key', 'required', 'type', 'description', 'addChild', 'removeNode'],
             },
             appId: {
               type: 'integer',
@@ -64,20 +64,100 @@ export default {
             testObj: {
               type: 'object',
               title: '测试对象',
-              disabled: ['addChild'],
+              __disabled: ['addChild'],
             },
             testObj2: {
               type: 'object',
               title: '测试对象2',
-              disabled: ['removeNode'],
+              __disabled: ['removeNode'],
             },
           },
           required: ['name', 'appId', 'credate'],
         },
       },
+      test: {
+        type: 'object',
+        properties: {
+          code: {
+            type: 'number',
+          },
+          data: {
+            type: 'object',
+            properties: {
+              receiving_num: {
+                type: 'object',
+                properties: {
+                  ot_num: {
+                    type: 'number',
+                    description: '海外运输中数量 overseas_transport',
+                  },
+                  oo_num: {
+                    type: 'number',
+                    description: '海外操作中数量 overseas_operating',
+                  },
+                },
+                description: '入库单数量',
+              },
+              list: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    gc_rv_sign_status: {
+                      type: 'string',
+                      description: '海外签收状态 海外仓签收状态 0未签收 1签收中 2签收完成',
+                    },
+                    clearance: {
+                      type: 'string',
+                      description: '清关方式参照wiki',
+                    },
+                    customs: {
+                      type: 'string',
+                      description: '报关方式参照wiki',
+                    },
+                  },
+                },
+                description: '列表数据',
+              },
+              total: {
+                type: 'integer',
+                description: '数据总条数',
+              },
+            },
+            required: [],
+          },
+          message: {
+            type: 'string',
+          },
+        },
+        required: ['code', 'message'],
+      },
     }
   },
+  mounted() {
+    this.changeData(this.tree.root)
+    console.log(this.tree.root)
+   let gettype=Object.prototype.toString
+    console.log('**********************************',gettype.call(''))
+  },
   methods: {
+    changeData(data) {
+      // const keys = data?.type ==='object'
+      for (let key in data) {
+        if (data[key] === 'object' && data.properties) {
+          this.changeData(data.properties)
+        } else if (data[key] === 'array') {
+          this.changeData(data.items.properties)
+        } else {
+          console.log('===========data key=', key, typeof data[key])
+          const t = typeof data[key]
+          console.log(t)
+          if (t === 'object') {
+            data[key]['__disabled'] = ['key', 'required', 'type', 'description', 'addChild', 'removeNode']
+          }
+        }
+      }
+    },
     handleImportJson() {
       const t = GenerateSchema.json(JSON.parse(this.importJson))
       delete t.$schema
