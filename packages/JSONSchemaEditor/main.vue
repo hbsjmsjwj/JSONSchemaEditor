@@ -76,11 +76,11 @@
         </a-tooltip>
         <a-tooltip v-if="isObject">
           <span slot="title" v-text="local['add_child_node']">添加子节点</span>
-          <a-button type="link" icon="plus" class="plus-icon" @click="addChild" />
+          <a-button :disabled="pickValue.disabled&&pickValue.disabled.indexOf('addChild') !== -1" type="link" icon="plus" class="plus-icon" @click="addChild" />
         </a-tooltip>
         <a-tooltip v-if="!root && !isItem">
           <span slot="title" v-text="local['remove_node']">删除节点</span>
-          <a-button type="link" class="close-icon ant-btn-icon-only" @click="removeNode">
+          <a-button type="link" class="close-icon ant-btn-icon-only" @click="removeNode" :disabled="pickValue.disabled&&pickValue.disabled.indexOf('removeNode') !== -1" >
             <i aria-label="icon: plus" class="anticon anticon-plus">
               <svg
                 viewBox="64 64 896 896"

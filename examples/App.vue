@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <div class="title">
-    </div>
+    <div class="title"></div>
     <div class="desc">
       <div>
         A json-schema editor of high efficient and easy-to-use, base on Vue.
@@ -51,7 +50,7 @@ export default {
               title: '名称',
               maxLength: 10,
               minLength: 2,
-              disabled: ['key','required','type','description'],
+              disabled: ['key', 'required', 'type', 'description', 'addChild', 'removeNode'],
             },
             appId: {
               type: 'integer',
@@ -62,8 +61,18 @@ export default {
               title: '创建日期',
               format: 'date',
             },
+            testObj: {
+              type: 'object',
+              title: '测试对象',
+              disabled: ['addChild'],
+            },
+            testObj2: {
+              type: 'object',
+              title: '测试对象2',
+              disabled: ['removeNode'],
+            },
           },
-          required: ['name','appId', 'credate'],
+          required: ['name', 'appId', 'credate'],
         },
       },
     }
