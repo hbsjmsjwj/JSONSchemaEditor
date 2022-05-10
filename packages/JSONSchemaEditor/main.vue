@@ -1,6 +1,7 @@
 <template>
   <div class="json-schema-editor">
-    <a-row class="row" :gutter="10">
+    <!--判断内置字段  __disabled  -->
+    <a-row class="row" :gutter="10" v-if="pickKey!=='__disabled'">
       <a-col :span="8" class="ant-col-name">
         <div :style="{ marginLeft: `${20 * deep}px` }" class="ant-col-name-c">
           <a-button
@@ -298,11 +299,10 @@ export default {
   },
   computed: {
     pickValue() {
-      console.log('value=======', Object.values(this.value)[0])
+      console.log(this.value)
       return Object.values(this.value)[0]
     },
     pickKey() {
-      console.log('key======', Object.keys(this.value))
       return Object.keys(this.value)[0]
     },
     isObject() {

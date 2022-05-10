@@ -43,7 +43,6 @@ export default {
         root: {
           type: 'object',
           title: '条件',
-          __disabled: ['description'],
           properties: {
             name: {
               type: 'string',
@@ -65,12 +64,21 @@ export default {
               type: 'object',
               title: '测试对象',
               __disabled: ['addChild'],
+              properties:{
+                name: {
+                  type: 'string',
+                  title: '名称',
+                  maxLength: 10,
+                  minLength: 2,
+                  __disabled: ['key', 'required', 'type', 'description', 'addChild', 'removeNode'],
+                },
+              }
             },
-            testObj2: {
-              type: 'object',
-              title: '测试对象2',
-              __disabled: ['removeNode'],
-            },
+            // testObj2: {
+            //   type: 'object',
+            //   title: '测试对象2',
+            //   __disabled: ['removeNode'],
+            // },
           },
           required: ['name', 'appId', 'credate'],
         },
@@ -136,7 +144,6 @@ export default {
   },
   mounted() {
     this.changeData(this.tree.root)
-    console.log(this.tree.root)
    let gettype=Object.prototype.toString
     console.log('**********************************',gettype.call(''))
   },
@@ -152,7 +159,7 @@ export default {
           console.log('===========data key=', key, typeof data[key])
           const t = typeof data[key]
           console.log(t)
-          if (t === 'object') {
+          if (t === 'object'&&data[key]!=='__disabled') {
             data[key]['__disabled'] = ['key', 'required', 'type', 'description', 'addChild', 'removeNode']
           }
         }
