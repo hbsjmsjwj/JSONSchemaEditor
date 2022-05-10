@@ -43,6 +43,7 @@ export default {
         root: {
           type: 'object',
           title: '条件',
+          __disabled: ['key', 'required', 'type', 'description', 'addChild', 'removeNode'],
           properties: {
             name: {
               type: 'string',
